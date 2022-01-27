@@ -82,7 +82,20 @@ bool MyEngine::keyPressed(const OgreBites::KeyboardEvent& evt)
 
 bool MyEngine::frameStarted(const Ogre::FrameEvent& evt)
 {
+	// Main "game loop" of the application
+	// Let parent handle this callback as well
 	ApplicationContext::frameStarted(evt);
-	player_->Update(evt.timeSinceLastFrame);
+	// Store the time that has passed since last time we got the callback
+	const Ogre::Real delta_time = evt.timeSinceLastFrame;
+	// Check what keys of the keyboard are being pressed
+	const Uint8* state = SDL_GetKeyboardState(nullptr);
+
+	// Update any subsystems
+	if (player_ != nullptr) player_->update(delta_time, state);
+	if (roaming_camera_ != nullptr) roaming_camera_->update(delta_time, state);
+
+	// Update all the managed pickup objects
+	PickupManager::Update(delta_time, state);
+
 	return true;
 }
