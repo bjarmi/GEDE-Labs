@@ -52,6 +52,9 @@ void MyEngine::populateScene()
 	SceneNode* directionalLightNode = scene_manager_->getRootSceneNode()->createChildSceneNode();
 	directionalLightNode->attachObject(directionalLight);
 	directionalLightNode->setDirection(Ogre::Vector3(0, -1, -1));
+
+	PickupManager::initialize(scene_manager_, player_->getEntityNode());
+	PickupManager::addPickupObject("cube.mesh");
 }
 
 void MyEngine::setupCamera()
