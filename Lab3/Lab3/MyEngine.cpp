@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "MyEngine.h"
 
-MyEngine::MyEngine() : ApplicationContext("SC-T-637-GEDE Lab 2")
+MyEngine::MyEngine() : ApplicationContext("SC-T-637-GEDE Lab 3")
 {
 }
 

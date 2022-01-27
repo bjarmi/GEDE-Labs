@@ -7,5 +7,6 @@
 #include <SDL.h>
 #include <iostream>
 #include <OgreRTShaderSystem.h>
+#include <OgreMath.h>
 
 #endif
