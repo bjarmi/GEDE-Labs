@@ -1,6 +1,7 @@
 #pragma once
 #include "pch.h"
 #include "PlayerAvatar.h"
+#include "RoamingCamera.h"
 
 using namespace Ogre;
 using namespace OgreBites;
@@ -20,7 +21,6 @@ public:
 private:
 	Root* root_;
 	SceneManager* scene_manager_;
-	Camera* camera_;
-	SceneNode* camera_node_;
+	RoamingCamera* roaming_camera_;
 	PlayerAvatar* player_;
 };
