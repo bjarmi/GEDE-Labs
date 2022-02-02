@@ -104,15 +104,13 @@ void PickupManager::Update(Ogre::Real delta_time, const Uint8* state)
         }
 
         if (pickupObject->isPickedUp())
-        {
             // If the effect is finished we can dispose of the object
             if (pickupObject->getPickupEffect()->isFinished())
             {
-                // TODO: If the effect is finished delete the object
-                // hint: https://ogrecave.github.io/ogre/api/1.12/class_ogre_1_1_scene_manager.html#aea3103164ed0f27baeb67a3ae2fe429b
+                scene_manager_->destroyEntity(pickupObject->getEntity());
+                pickup_objects.remove(pickupObject);
                 erased = true;
             }
-        }
 
         // Don't increase the counter if we have deleted an item, otherwise it throws an error
         if (!erased) ++i;
