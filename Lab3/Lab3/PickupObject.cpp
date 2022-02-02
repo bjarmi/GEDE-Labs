@@ -39,9 +39,23 @@ bool PickupObject::isPickedUp() {
 	return picked_up_;
 }
 
-bool PickupObject::collidesWith(SceneNode* other_node, float distance) {
+bool PickupObject::collidesWith(SceneNode* other_node)
+{
 	bool collision = false;
-	// TODO: Assign true to "collision" if the pickup object collides with the "other_node"
+	// Calculate thier collision radius.
+
+	Vector3 this_scale = this->entity_node_->getScale();
+	Vector3 other_scale = other_node->getScale();
+
+	float this_radius = std::max(this_scale.x, this_scale.y) / 2;
+	float other_radius = std::max(other_scale.x, other_scale.y) / 2;
+
+	// Get distance between nodes.
+
+	float distance = this->entity_node_->getPosition().distance(other_node->getPosition());
+
+	if (distance < (this_radius + other_radius))
+		collision = true;
 
 	return collision;
 }

@@ -26,7 +26,7 @@ public:
 	bool isPickedUp();                                        // True if the pickup effect has been run
 
 	void runPickupEffect();                                   // Display a special motion effect on the game object
-	bool collidesWith(SceneNode* other_node, float distance); // True if the passed node is within distance of this object
+	bool collidesWith(SceneNode* other_node);				  // True if the passed node is within distance of this object
 	void update(float delta_time) const;                      // Updates object, including any running motion effects
 
 private:
