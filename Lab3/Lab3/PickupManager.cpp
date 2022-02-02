@@ -96,7 +96,7 @@ void PickupManager::Update(Ogre::Real delta_time, const Uint8* state)
 
         // TODO: Check for collision with a game object that has not yet been picked up
         // Basically write the if clause.
-        if ()
+        if (pickupObject->collidesWith())
         {
             // BONUS
             // TODO: Make the scene node of the cube a child of the player's scene node, and center it on the player
