@@ -13,7 +13,7 @@ PlayerAvatar::PlayerAvatar(SceneManager* scene_manager, String mesh_file_name)
 
 	rotation_ = 0.0;
 	rotation_speed_ = 5.0f;
-	walking_speed_ = 0.5;
+	walking_speed_ = 4;
 }
 
 SceneNode* PlayerAvatar::getEntityNode()
