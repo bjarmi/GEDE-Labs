@@ -47,8 +47,8 @@ bool PickupObject::collidesWith(Ogre::SceneNode* other_node)
 	Ogre::Vector3 this_scale = this->entity_node_->getScale();
 	Ogre::Vector3 other_scale = other_node->getScale();
 
-	float this_radius = std::max(this_scale.x, this_scale.y) / 2;
-	float other_radius = std::max(other_scale.x, other_scale.y) / 2;
+	float this_radius = std::max(this_scale.x, this_scale.z) / 2;
+	float other_radius = std::max(other_scale.x, other_scale.z) / 2;
 
 	// Get distance between nodes.
 
