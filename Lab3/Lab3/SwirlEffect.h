@@ -25,7 +25,7 @@ public:
 
 private:
 	Ogre::SceneNode* scene_node_;		// The node to be moved
-	Ogre::Vector3 center_pos_;	// The original node position (motion is relative to this)
+	Ogre::Vector3 center_pos_;			// The original node position (motion is relative to this)
 
 	Ogre::Vector3 cylindrical_velocity_vector_;	// What gets added to position every second
 	Ogre::Vector3 start_cylindrical_pos_;		// Position at beginning of motion
