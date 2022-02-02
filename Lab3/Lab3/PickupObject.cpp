@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "PickupObject.h"
 
-PickupObject::PickupObject(SceneManager* scene_manager, const char* mesh_file_name,
-	Vector3 position, Vector3 scale)
+PickupObject::PickupObject(Ogre::SceneManager* scene_manager, const char* mesh_file_name,
+	Ogre::Vector3 position, Ogre::Vector3 scale)
 {
 	scene_manager_ = scene_manager;
 	entity_ = scene_manager_->createEntity(mesh_file_name);
@@ -20,7 +20,7 @@ PickupObject::~PickupObject()
 	if (pickup_effect_ != nullptr) delete(pickup_effect_);
 }
 
-SceneNode* PickupObject::getSceneNode() const
+Ogre::SceneNode* PickupObject::getSceneNode() const
 {
 	return  entity_node_;
 }
@@ -30,7 +30,7 @@ IPickupEffect* PickupObject::getPickupEffect() const
 	return pickup_effect_;
 }
 
-Entity* PickupObject::getEntity() const
+Ogre::Entity* PickupObject::getEntity() const
 {
 	return entity_;
 }
@@ -39,13 +39,13 @@ bool PickupObject::isPickedUp() {
 	return picked_up_;
 }
 
-bool PickupObject::collidesWith(SceneNode* other_node)
+bool PickupObject::collidesWith(Ogre::SceneNode* other_node)
 {
 	bool collision = false;
 	// Calculate thier collision radius.
 
-	Vector3 this_scale = this->entity_node_->getScale();
-	Vector3 other_scale = other_node->getScale();
+	Ogre::Vector3 this_scale = this->entity_node_->getScale();
+	Ogre::Vector3 other_scale = other_node->getScale();
 
 	float this_radius = std::max(this_scale.x, this_scale.y) / 2;
 	float other_radius = std::max(other_scale.x, other_scale.y) / 2;

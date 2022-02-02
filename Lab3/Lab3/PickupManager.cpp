@@ -4,15 +4,15 @@
 template<> PickupManager* Ogre::Singleton<PickupManager>::msSingleton = 0;
 
 // need to declare the static variables, otherwise we get a link error
-SceneManager* PickupManager::scene_manager_;
-SceneNode* PickupManager::player_node_;
+Ogre::SceneManager* PickupManager::scene_manager_;
+Ogre::SceneNode* PickupManager::player_node_;
 std::list<IPickupObject*> PickupManager::pickup_objects;
 
 PickupManager::PickupManager(){ }
 
 PickupManager::~PickupManager(){ }
 
-bool PickupManager::initialize(SceneManager* sceneManager, SceneNode* playerNode)
+bool PickupManager::initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode* playerNode)
 {
     if (msSingleton == NULL)
     {
@@ -53,28 +53,28 @@ PickupManager* PickupManager::getSingletonPtr()
 /** This function spawns a new pickup object at a random position near the player */
 void PickupManager::addPickupObject(const char* mesh_file_name)
 {
-    random_device rd;                           // obtain a random number from hardware
-    mt19937 gen(rd());                          // seed the generator
-    uniform_real_distribution<> distr(-50, 50); // define the range
+    std::random_device rd;                           // obtain a random number from hardware
+    std::mt19937 gen(rd());                          // seed the generator
+    std::uniform_real_distribution<> distr(-50, 50); // define the range
 
     // Create a new pickup Object in a random position near the player
     Ogre::Vector3 playerPosition = player_node_->getPosition();
-    Real randomXOffset = distr(gen); 
-    Real randomZOffset = distr(gen); 
+    Ogre::Real randomXOffset = distr(gen);
+    Ogre::Real randomZOffset = distr(gen);
     Ogre::Vector3 newSpawnPosition = Ogre::Vector3(playerPosition.x + randomXOffset, -3.0f, playerPosition.z + randomZOffset);
-    PickupObject* pickupObject = new PickupObject(scene_manager_, mesh_file_name, newSpawnPosition, Vector3(0.01, 0.01, 0.01));
+    PickupObject* pickupObject = new PickupObject(scene_manager_, mesh_file_name, newSpawnPosition, Ogre::Vector3(0.01, 0.01, 0.01));
     pickupObject->getEntity()->getMesh()->getSubMesh(0)->getMaterialName();
 
 
     // Set the color of the object
-    String MaterialName = pickupObject->getEntity()->getMesh()->getSubMesh(0)->getMaterialName();
-    MaterialPtr pMaterial = MaterialManager::getSingleton().getByName(MaterialName);
+    Ogre::String MaterialName = pickupObject->getEntity()->getMesh()->getSubMesh(0)->getMaterialName();
+    Ogre::MaterialPtr pMaterial = Ogre::MaterialManager::getSingleton().getByName(MaterialName);
     
     float r = 255.0f / 255;
     float g = 215.0f / 255;
     float b = 0.0f / 255;
 
-    ColourValue* color = new ColourValue(r, g, b, 1.0F);
+    Ogre::ColourValue* color = new Ogre::ColourValue(r, g, b, 1.0F);
     
     pMaterial->setDiffuse(*color);
     pMaterial->setAmbient(*color);
@@ -120,7 +120,7 @@ void PickupManager::Update(Ogre::Real delta_time, const Uint8* state)
 }
 
 
-bool PickupManager::_initialize(SceneManager* sceneManager, SceneNode* playerNode)
+bool PickupManager::_initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode* playerNode)
 {
     OGRE_LOCK_AUTO_MUTEX;
     // Do here initialization stuff if needed

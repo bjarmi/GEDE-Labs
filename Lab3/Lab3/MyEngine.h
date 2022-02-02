@@ -4,8 +4,6 @@
 #include "RoamingCamera.h"
 #include "PickupManager.h"
 
-using namespace Ogre;
-using namespace OgreBites;
 
 class MyEngine : public ApplicationContext, public InputListener
 {
@@ -20,8 +18,8 @@ public:
 	bool frameStarted(const Ogre::FrameEvent& evt);
 
 private:
-	Root* root_;
-	SceneManager* scene_manager_;
+	Ogre::Root* root_;
+	Ogre::SceneManager* scene_manager_;
 	RoamingCamera* roaming_camera_;
 	PlayerAvatar* player_;
 };

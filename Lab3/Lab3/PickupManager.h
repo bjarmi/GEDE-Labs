@@ -5,11 +5,8 @@
 #include <iostream>
 #include <random>
 
-using namespace std;
-using namespace Ogre;
-using namespace OgreBites;
 
-class PickupManager : public Singleton<PickupManager>
+class PickupManager : public Ogre::Singleton<PickupManager>
 {
     public:
         PickupManager(PickupManager const&) = delete;
@@ -18,7 +15,7 @@ class PickupManager : public Singleton<PickupManager>
         Initialize the Pickup Manager.
         Return true upon success.
         */
-        static bool initialize(SceneManager* sceneManager, SceneNode* playerNode);
+        static bool initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode* playerNode);
 
         /**
         Destroy the Pickup Manager.
@@ -40,8 +37,8 @@ class PickupManager : public Singleton<PickupManager>
 
 
     protected:
-        static SceneManager* scene_manager_;
-        static SceneNode* player_node_;
+        static Ogre::SceneManager* scene_manager_;
+        static Ogre::SceneNode* player_node_;
         static std::list<IPickupObject*> pickup_objects;
 
         /** Class default constructor */
@@ -51,7 +48,7 @@ class PickupManager : public Singleton<PickupManager>
         ~PickupManager();
 
         /** Initialize the pickup manager instance. */
-        bool _initialize(SceneManager* sceneManager, SceneNode* playerNode);
+        bool _initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode* playerNode);
 
         /** Destory the pickup manager instance. */
         void _destroy();

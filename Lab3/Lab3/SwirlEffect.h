@@ -1,7 +1,6 @@
 #pragma once
 #include "pch.h"
 
-using namespace OgreBites;
 
 // SWIRL EFFECT
 // A rotational motion effect that moves a scene node along a trajectory around its
@@ -13,7 +12,7 @@ public:
 	// scene_nnode: The node that gets moved
 	// cylindrical_velocity_vector: Defines the motion in cylindrical coordinates
 	//     in the form (up speed, out speed, angular speed)
-	SwirlEffect(SceneNode* scene_node, Ogre::Vector3 cylindrical_velocity_vector);
+	SwirlEffect(Ogre::SceneNode* scene_node, Ogre::Vector3 cylindrical_velocity_vector);
 
 	// Gets the current position relative to the original node position
 	Ogre::Vector3 getCylindrical() const;	// "Native" cylindrical coordinates (x=height, y=radius, z=angle)
