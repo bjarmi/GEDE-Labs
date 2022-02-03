@@ -99,8 +99,8 @@ void PickupManager::Update(Ogre::Real delta_time, const Uint8* state)
         {
             // BONUS
             // TODO: Make the scene node of the cube a child of the player's scene node, and center it on the player
-
-
+            scene_manager_->getRootSceneNode()->removeChild(pickupObject->getSceneNode());  // Remove pickup object from root node.
+            player_node_->addChild(pickupObject->getSceneNode());  // Add pickup object to player.
             pickupObject->runPickupEffect();
         }
 

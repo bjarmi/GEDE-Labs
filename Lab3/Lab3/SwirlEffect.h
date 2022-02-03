@@ -6,18 +6,18 @@
 // SWIRL EFFECT
 // A rotational motion effect that moves a scene node along a trajectory around its
 // center defined by a velocity vector specified in cylindrical coordinates
-class SwirlEffect : public IPickupEffect {
+class SwirlEffect final : public IPickupEffect {
 public:
 
 	// CONSTRUCTOR
-	// scene_nnode: The node that gets moved
+	// scene_node: The node that gets moved
 	// cylindrical_velocity_vector: Defines the motion in cylindrical coordinates
 	//     in the form (up speed, out speed, angular speed)
-	SwirlEffect(Ogre::SceneNode* scene_node, Ogre::Vector3 cylindrical_velocity_vector);
+	SwirlEffect(Ogre::SceneNode* scene_node, Ogre::Vector3 const cylindrical_velocity_vector);
 
 	// Gets the current position relative to the original node position
-	Ogre::Vector3 getCylindrical() const;	// "Native" cylindrical coordinates (x=height, y=radius, z=angle)
-	Ogre::Vector3 getCartesian() const;		// Converted to Cartesian coordinates (x, y, z)
+	Ogre::Vector3 get_cylindrical() const;	// "Native" cylindrical coordinates (x=height, y=radius, z=angle)
+	Ogre::Vector3 get_cartesian() const;		// Converted to Cartesian coordinates (x, y, z)
 
 	void run(); 					// Starts the motion along the trajectory
 	void update(float delta_time);	// Steps the motion along the trajectory

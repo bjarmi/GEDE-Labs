@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "SwirlEffect.h"
 
-SwirlEffect::SwirlEffect(Ogre::SceneNode* scene_node, Ogre::Vector3 cylindrical_velocity_vector)
+SwirlEffect::SwirlEffect(Ogre::SceneNode* scene_node, Ogre::Vector3 const cylindrical_velocity_vector)
 {
 	scene_node_ = scene_node;
 	center_pos_ = scene_node_->getParent()->getPosition();
@@ -16,25 +16,26 @@ SwirlEffect::SwirlEffect(Ogre::SceneNode* scene_node, Ogre::Vector3 cylindrical_
 	current_cylindrical_pos_ = start_cylindrical_pos_;
 	end_cylindrical_pos_ = Ogre::Vector3(5, 0, 0);
 
-
+	effect_running_ = false;
 	effect_finished_ = false;
 	run();
 }
 
-Ogre::Vector3 SwirlEffect::getCylindrical() const { return current_cylindrical_pos_; }
+Ogre::Vector3 SwirlEffect::get_cylindrical() const { return current_cylindrical_pos_; }
 
-Ogre::Vector3 SwirlEffect::getCartesian() const
+Ogre::Vector3 SwirlEffect::get_cartesian() const
 {
-	Ogre::Real hight = current_cylindrical_pos_.x;
-	Ogre::Real radius = current_cylindrical_pos_.y;
-	Ogre::Real angle = current_cylindrical_pos_.z;
+	Ogre::Real const height = current_cylindrical_pos_.x;
+	Ogre::Real const radius = current_cylindrical_pos_.y;
+	Ogre::Real const angle = current_cylindrical_pos_.z;
 
-	
-	return Ogre::Vector3(
+	auto const cartesian_vector = Ogre::Vector3(
 		Ogre::Math::Cos(angle) * radius,
-		hight,
+		height,
 		Ogre::Math::Sin(angle) * radius
 	);
+
+	return cartesian_vector;
 }
 
 void SwirlEffect::update(float delta_time)
@@ -50,7 +51,7 @@ void SwirlEffect::update(float delta_time)
 		else
 		{
 			current_cylindrical_pos_ = current_cylindrical_pos_ + delta_time * cylindrical_velocity_vector_;
-			scene_node_->setPosition(getCartesian() + center_pos_);
+			scene_node_->setPosition(get_cartesian() + center_pos_);
 		}
 	}
 }
