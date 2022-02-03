@@ -4,14 +4,30 @@
 SwirlEffect::SwirlEffect(Ogre::SceneNode* scene_node, Ogre::Vector3 cylindrical_velocity_vector)
 {
 	scene_node_ = scene_node;
+	center_pos_ = scene_node_->getParent()->getPosition();
+
 	cylindrical_velocity_vector_ = cylindrical_velocity_vector;
+
+	start_cylindrical_pos_ = Ogre::Vector3(
+		scene_node_->getPosition().y,
+		scene_node_->getPosition().x / Ogre::Math::Cos(cylindrical_velocity_vector_.z),
+		cylindrical_velocity_vector_.z
+	);
+	current_cylindrical_pos_ = start_cylindrical_pos_;
+	end_cylindrical_pos_ = Ogre::Vector3(5, 0, 0);
+
+
+	effect_finished_ = false;
+	run();
 }
+
+Ogre::Vector3 SwirlEffect::getCylindrical() const { return current_cylindrical_pos_; }
 
 Ogre::Vector3 SwirlEffect::getCartesian() const
 {
-	Ogre::Real hight = cylindrical_velocity_vector_.x;
-	Ogre::Real radius = cylindrical_velocity_vector_.y;
-	Ogre::Real angle = cylindrical_velocity_vector_.z;
+	Ogre::Real hight = current_cylindrical_pos_.x;
+	Ogre::Real radius = current_cylindrical_pos_.y;
+	Ogre::Real angle = current_cylindrical_pos_.z;
 
 	
 	return Ogre::Vector3(
@@ -38,3 +54,9 @@ void SwirlEffect::update(float delta_time)
 		}
 	}
 }
+
+void SwirlEffect::run() { effect_running_ = true; }
+
+bool SwirlEffect::isRunning() { return effect_running_; }
+
+bool SwirlEffect::isFinished() { return effect_finished_; }

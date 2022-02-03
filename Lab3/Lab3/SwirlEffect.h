@@ -1,11 +1,12 @@
 #pragma once
 #include "pch.h"
+#include "IPickupEffect.h"
 
 
 // SWIRL EFFECT
 // A rotational motion effect that moves a scene node along a trajectory around its
 // center defined by a velocity vector specified in cylindrical coordinates
-class SwirlEffect {
+class SwirlEffect : public IPickupEffect {
 public:
 
 	// CONSTRUCTOR

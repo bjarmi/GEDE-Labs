@@ -100,6 +100,7 @@ void PickupManager::Update(Ogre::Real delta_time, const Uint8* state)
             // BONUS
             // TODO: Make the scene node of the cube a child of the player's scene node, and center it on the player
 
+
             pickupObject->runPickupEffect();
         }
 
@@ -107,10 +108,10 @@ void PickupManager::Update(Ogre::Real delta_time, const Uint8* state)
             // If the effect is finished we can dispose of the object
             if (pickupObject->getPickupEffect()->isFinished())
             {
-                scene_manager_->destroyEntity(pickupObject->getEntity());
-                pickup_objects.remove(pickupObject);
+               
                 erased = true;
             }
+
 
         // Don't increase the counter if we have deleted an item, otherwise it throws an error
         if (!erased) ++i;

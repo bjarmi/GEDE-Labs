@@ -42,19 +42,13 @@ bool PickupObject::isPickedUp() {
 bool PickupObject::collidesWith(Ogre::SceneNode* other_node)
 {
 	bool collision = false;
-	// Calculate thier collision radius.
-
-	Ogre::Vector3 this_scale = this->entity_node_->getScale();
-	Ogre::Vector3 other_scale = other_node->getScale();
-
-	float this_radius = std::max(this_scale.x, this_scale.z) / 2;
-	float other_radius = std::max(other_scale.x, other_scale.z) / 2;
+	
 
 	// Get distance between nodes.
 
 	float distance = this->entity_node_->getPosition().distance(other_node->getPosition());
 
-	if (distance < (this_radius + other_radius))
+	if (distance < 5)  // TODO: Replace with sum og collision radius of both object.
 		collision = true;
 
 	return collision;
@@ -63,7 +57,7 @@ bool PickupObject::collidesWith(Ogre::SceneNode* other_node)
 void PickupObject::runPickupEffect()
 {
 	// TODO: Instantiate and run the effect here (try velocity (5.0, -5, 50.0)
-	
+	pickup_effect_ = new SwirlEffect(this->entity_node_, Ogre::Vector3(5.0, -5, 50.0));
 	picked_up_ = true;
 }
 
