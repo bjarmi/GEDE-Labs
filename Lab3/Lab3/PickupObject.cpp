@@ -17,12 +17,12 @@ PickupObject::PickupObject(Ogre::SceneManager* scene_manager, const char* mesh_f
 
 PickupObject::~PickupObject()
 {
-	if (pickup_effect_ != nullptr) delete(pickup_effect_);
+	delete(pickup_effect_);
 }
 
 Ogre::SceneNode* PickupObject::getSceneNode() const
 {
-	return  entity_node_;
+	return entity_node_;
 }
 
 IPickupEffect* PickupObject::getPickupEffect() const
@@ -42,7 +42,6 @@ bool PickupObject::isPickedUp() {
 bool PickupObject::collidesWith(Ogre::SceneNode* other_node)
 {
 	bool collision = false;
-	
 
 	// Get distance between nodes.
 
@@ -56,7 +55,6 @@ bool PickupObject::collidesWith(Ogre::SceneNode* other_node)
 
 void PickupObject::runPickupEffect()
 {
-	// TODO: Instantiate and run the effect here (try velocity (5.0, -5, 50.0)
 	pickup_effect_ = new SwirlEffect(this->entity_node_, Ogre::Vector3(5.0, -5, 50.0));
 	picked_up_ = true;
 }

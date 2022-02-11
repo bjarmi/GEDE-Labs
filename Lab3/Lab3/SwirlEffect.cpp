@@ -4,7 +4,7 @@
 SwirlEffect::SwirlEffect(Ogre::SceneNode* scene_node, Ogre::Vector3 const cylindrical_velocity_vector)
 {
 	scene_node_ = scene_node;
-	center_pos_ = scene_node_->getParent()->getPosition();
+	center_pos_ = scene_node_->getPosition();
 
 	cylindrical_velocity_vector_ = cylindrical_velocity_vector;
 

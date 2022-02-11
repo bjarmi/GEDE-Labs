@@ -55,26 +55,29 @@ void PickupManager::addPickupObject(const char* mesh_file_name)
 {
     std::random_device rd;                           // obtain a random number from hardware
     std::mt19937 gen(rd());                          // seed the generator
-    std::uniform_real_distribution<> distr(-50, 50); // define the range
+    const std::uniform_real_distribution<> distr(-50, 50); // define the range
 
     // Create a new pickup Object in a random position near the player
-    Ogre::Vector3 playerPosition = player_node_->getPosition();
-    Ogre::Real randomXOffset = distr(gen);
-    Ogre::Real randomZOffset = distr(gen);
-    Ogre::Vector3 newSpawnPosition = Ogre::Vector3(playerPosition.x + randomXOffset, -3.0f, playerPosition.z + randomZOffset);
-    PickupObject* pickupObject = new PickupObject(scene_manager_, mesh_file_name, newSpawnPosition, Ogre::Vector3(0.01, 0.01, 0.01));
-    pickupObject->getEntity()->getMesh()->getSubMesh(0)->getMaterialName();
-
+    const Ogre::Vector3 playerPosition = player_node_->getPosition();
+    const Ogre::Real random_x_offset = distr(gen);
+    const Ogre::Real random_z_offset = distr(gen);
+    const auto new_spawn_position = Ogre::Vector3(playerPosition.x + random_x_offset, -3.0f, playerPosition.z + random_z_offset);
+    const auto pickup_object = new PickupObject(
+        scene_manager_,
+        mesh_file_name,
+        new_spawn_position,
+        Ogre::Vector3(0.01, 0.01, 0.01)
+    );
 
     // Set the color of the object
-    Ogre::String MaterialName = pickupObject->getEntity()->getMesh()->getSubMesh(0)->getMaterialName();
-    Ogre::MaterialPtr pMaterial = Ogre::MaterialManager::getSingleton().getByName(MaterialName);
+    const Ogre::String MaterialName = pickup_object->getEntity()->getMesh()->getSubMesh(0)->getMaterialName();
+    const Ogre::MaterialPtr pMaterial = Ogre::MaterialManager::getSingleton().getByName(MaterialName);
     
-    float r = 255.0f / 255;
-    float g = 215.0f / 255;
-    float b = 0.0f / 255;
+    constexpr float r = 255.0f / 255;
+    constexpr float g = 215.0f / 255;
+    constexpr float b = 0.0f / 255;
 
-    Ogre::ColourValue* color = new Ogre::ColourValue(r, g, b, 1.0F);
+    const Ogre::ColourValue* color = new Ogre::ColourValue(r, g, b, 1.0F);
     
     pMaterial->setDiffuse(*color);
     pMaterial->setAmbient(*color);
@@ -82,7 +85,7 @@ void PickupManager::addPickupObject(const char* mesh_file_name)
 
 
     // Insert the new Pickup Object in the list of managed objects
-    pickup_objects.push_back(pickupObject);
+    pickup_objects.push_back(pickup_object);
 }
 
 void PickupManager::Update(Ogre::Real delta_time, const Uint8* state)
@@ -90,34 +93,29 @@ void PickupManager::Update(Ogre::Real delta_time, const Uint8* state)
     // Update all the managed pickup objects, and delete them if they finished the effect
     for (auto i = pickup_objects.begin(); i != pickup_objects.end();) {
         bool erased = false;
-        IPickupObject* pickupObject = *i;
+        IPickupObject* pickup_object = *i;
 
-        pickupObject->update(delta_time);
+        pickup_object->update(delta_time);
 
         // Check for collision with a game object that has not yet been picked up
-        if (pickupObject->collidesWith(player_node_))
+        if (pickup_object->collidesWith(player_node_))
         {
-            // BONUS
-            // TODO: Make the scene node of the cube a child of the player's scene node, and center it on the player
-            scene_manager_->getRootSceneNode()->removeChild(pickupObject->getSceneNode());  // Remove pickup object from root node.
-            player_node_->addChild(pickupObject->getSceneNode());  // Add pickup object to player.
-            pickupObject->runPickupEffect();
+            scene_manager_->getRootSceneNode()->removeChild(pickup_object->getSceneNode());  // Remove pickup object from root node.
+            player_node_->addChild(pickup_object->getSceneNode());  // Add pickup object to player.
+            pickup_object->runPickupEffect();
         }
 
-        if (pickupObject->isPickedUp())
-            // If the effect is finished we can dispose of the object
-            if (pickupObject->getPickupEffect()->isFinished())
-            {
-               
-                erased = true;
-            }
-
-
-        // Don't increase the counter if we have deleted an item, otherwise it throws an error
-        if (!erased) ++i;
+        // If the effect is finished we can dispose of the object
+        if (pickup_object->isPickedUp() && pickup_object->getPickupEffect()->isFinished())
+        {
+            pickup_object->getSceneNode()->detachObject(pickup_object->getEntity());  // Detach entity form scene node.
+            scene_manager_->destroyEntity(pickup_object->getEntity());
+            pickup_objects.erase(i++);
+            continue;
+        }
+        ++i;
     }
 }
-
 
 bool PickupManager::_initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode* playerNode)
 {
