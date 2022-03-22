@@ -66,7 +66,7 @@ void PickupManager::addPickupObject(const char* mesh_file_name)
         scene_manager_,
         mesh_file_name,
         new_spawn_position,
-        Ogre::Vector3(0.03, 0.03, 0.03)
+        Ogre::Vector3(1, 1, 1)
     );
 
     // Set the color of the object
