@@ -42,13 +42,16 @@ class PickupManager : public Ogre::Singleton<PickupManager>
         static std::list<IPickupObject*> pickup_objects_;
 
         /** Class default constructor */
-        PickupManager();
+        PickupManager() = default;
 
         /** Class destructor */
-        ~PickupManager();
+        ~PickupManager() = default;
 
         /** Initialize the pickup manager instance. */
-        static bool _initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode* playerNode);
+        static bool _initialize(
+            Ogre::SceneManager* sceneManager,
+            Ogre::SceneNode* playerNode
+        );
 
         /** Destory the pickup manager instance. */
         void _destroy();

@@ -1,18 +1,18 @@
 #include "pch.h"
 #include "PickupManager.h"
 
-template<> PickupManager* Ogre::Singleton<PickupManager>::msSingleton = 0;
+template<> PickupManager* Ogre::Singleton<PickupManager>::msSingleton = nullptr;
 
 // need to declare the static variables, otherwise we get a link error
 Ogre::SceneManager* PickupManager::scene_manager_;
 Ogre::SceneNode* PickupManager::player_node_;
 std::list<IPickupObject*> PickupManager::pickup_objects_;
 
-PickupManager::PickupManager(){ }
 
-PickupManager::~PickupManager(){ }
-
-bool PickupManager::initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode* playerNode)
+bool PickupManager::initialize(
+    Ogre::SceneManager* sceneManager, 
+    Ogre::SceneNode* playerNode
+)
 {
     if (msSingleton == NULL)
     {
