@@ -1,12 +1,15 @@
 #pragma once
 #include "pch.h"
+#include "AABBCollider.h"
 
-using namespace Ogre;
 
 class PlayerAvatar 
 {
 public:
-	PlayerAvatar(SceneManager* scene_manager, String mesh_file_name);
+	PlayerAvatar(
+		Ogre::SceneManager* scene_manager,
+		Ogre::String mesh_file_name
+	);
 	virtual ~PlayerAvatar() = default;
 	void update(Ogre::Real delta_time, const Uint8* state);
 	void update(
@@ -19,23 +22,26 @@ public:
 		const float rotation, 
 		const Ogre::Real delta_time
 	) const;
-	Radian GetRotation(const Ogre::Vector3& vec) const;
+	Ogre::Radian GetRotation(const Ogre::Vector3& vec) const;
 	void setIdleAnimationLoop();
 	void setWalkingAnimationLoop();
 	void StopAnimationLoop(void) const;
 	void StartAnimationLoop(void) const;
-	SceneNode* getEntityNode();
+	Ogre::SceneNode* getEntityNode();
+	AABBCollider* get_collider() const;
 
 private:
 
-	SceneManager* scene_manager_;
-	Entity* entity_;
-	SceneNode* entity_node_;
-	AnimationState* animation_state_base_ = nullptr;
-	AnimationState* animation_state_top_ = nullptr;
+	Ogre::SceneManager* scene_manager_;
+	Ogre::Entity* entity_;
+	Ogre::SceneNode* entity_node_;
+	Ogre::AnimationState* animation_state_base_ = nullptr;
+	Ogre::AnimationState* animation_state_top_ = nullptr;
 
-	Entity* right_sword;
-	Entity* left_sword;
+	AABBCollider* collider_;
+
+	Ogre::Entity* right_sword;
+	Ogre::Entity* left_sword;
 
 
 	float rotation_ = 0.0;

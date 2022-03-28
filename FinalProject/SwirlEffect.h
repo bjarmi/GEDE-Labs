@@ -13,7 +13,10 @@ public:
 	// scene_node: The node that gets moved
 	// cylindrical_velocity_vector: Defines the motion in cylindrical coordinates
 	//     in the form (up speed, out speed, angular speed)
-	SwirlEffect(Ogre::SceneNode* scene_node, Ogre::Vector3 const cylindrical_velocity_vector);
+	SwirlEffect(
+		Ogre::SceneNode* scene_node,
+		Ogre::Vector3 const cylindrical_velocity_vector
+	);
 
 	// Gets the current position relative to the original node position
 	Ogre::Vector3 get_cylindrical() const;	// "Native" cylindrical coordinates (x=height, y=radius, z=angle)

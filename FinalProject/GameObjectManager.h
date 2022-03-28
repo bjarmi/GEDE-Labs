@@ -2,6 +2,7 @@
 #include "pch.h"
 #include "OgreSingleton.h"
 #include "IGameObject.h"
+#include "PlayerAvatar.h"
 
 class GameObjectManager : public Ogre::Singleton<GameObjectManager>
 {
@@ -11,7 +12,7 @@ public:
 
     static bool initialize(
         Ogre::SceneManager* scene_manager,
-        Ogre::SceneNode* player_node
+        PlayerAvatar* player
     );
 
     /**
@@ -27,7 +28,7 @@ public:
     /// @copydoc Singleton::getSingleton()
     static GameObjectManager* get_singleton_ptr();
 
-    static void add_static_game_object(IGameObject* object);
+    static void add_game_object(IGameObject* object);
 
 
     static void update(
@@ -38,9 +39,8 @@ public:
 
 protected:
     static Ogre::SceneManager* scene_manager_;
-    static Ogre::SceneNode* player_node_;
-    static std::list<IGameObject*> static_game_objects_;
-    static std::list<IGameObject*> dynamic_game_objects_;
+    static PlayerAvatar* player_;
+    static std::list<IGameObject*> game_objects_;
     
 
     /** Class default constructor */
@@ -52,7 +52,7 @@ protected:
     /** Initialize the pickup manager instance. */
     static bool _initialize(
         Ogre::SceneManager* scene_manager, 
-        Ogre::SceneNode* player_node
+        PlayerAvatar* player
     );
 
     /** Destory the pickup manager instance. */

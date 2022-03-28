@@ -7,6 +7,7 @@
 
 #include "GameObjectManager.h"
 #include "StaticGameObject.h"
+#include "DynamicGameObject.h"
 
 
 class MyEngine :
@@ -21,6 +22,7 @@ public:
 	void setupSceneManager(void);
 	void setupCamera();
 	void populateScene();
+	StaticGameObject* populate_ground() const;
 	bool frameStarted(const Ogre::FrameEvent& evt);
 
 private:

@@ -9,13 +9,22 @@ StaticGameObject::StaticGameObject(
 	const Ogre::Vector3 scale
 )
 {
-	scene_manager_ = scene_manager;
-	entity_ = scene_manager_->createEntity(mesh_file_name);
-	entity_node_ = scene_manager_->getRootSceneNode()->createChildSceneNode();
+	entity_ = scene_manager->createEntity(mesh_file_name);
+	entity_node_ = scene_manager->getRootSceneNode()->createChildSceneNode();
 	entity_node_->attachObject(entity_);
 	entity_node_->setPosition(position);
 	entity_node_->setScale(scale);
 	entity_->setCastShadows(true);
+	entity_node_->showBoundingBox(true);
+	collider_= new AABBCollider(entity_node_);
+}
+
+StaticGameObject::StaticGameObject(Ogre::SceneNode* scene_node, Ogre::Entity* entity)
+{
+	entity_node_ = scene_node;
+	entity_ = entity;
+	entity_node_->showBoundingBox(true);
+	collider_ = new AABBCollider(entity_node_);
 }
 
 StaticGameObject::~StaticGameObject()
@@ -33,10 +42,25 @@ Ogre::SceneNode* StaticGameObject::get_scene_node() const
 	return entity_node_;
 }
 
-ICollider* StaticGameObject::get_collider()
+ICollider* StaticGameObject::get_collider() const
 {
 	return collider_;
 }
 
-void StaticGameObject::update(Ogre::Real delta_time) const{}
+void StaticGameObject::update(const Ogre::Real delta_time)
+{
+	return;	
+}
 
+void StaticGameObject::apply_force(
+	const Ogre::Vector3 force,
+	const Ogre::Real delta_time
+)
+{
+	return;
+}
+
+void StaticGameObject::collide(IGameObject* other) const
+{
+	return;
+}

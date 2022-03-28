@@ -1,13 +1,19 @@
 #include "pch.h"
 #include "PlayerAvatar.h"
 
-PlayerAvatar::PlayerAvatar(SceneManager* scene_manager, String mesh_file_name)
+PlayerAvatar::PlayerAvatar(
+	Ogre::SceneManager* scene_manager,
+	Ogre::String mesh_file_name
+)
 {
 	scene_manager_ = scene_manager;
 	entity_ = scene_manager_->createEntity(mesh_file_name);
 	entity_->setCastShadows(true);
 	entity_node_ = scene_manager_->getRootSceneNode()->createChildSceneNode();
 	entity_node_->attachObject(entity_);
+
+	entity_node_->showBoundingBox(false);
+	collider_ = new AABBCollider(entity_node_);
 
 	// Sinbad specific
 	entity_->getSubEntity(1)->setMaterialName("Sinbad/Body2");
@@ -18,10 +24,16 @@ PlayerAvatar::PlayerAvatar(SceneManager* scene_manager, String mesh_file_name)
 	entity_->attachObjectToBone("Sheath.L", left_sword);
 }
 
-SceneNode* PlayerAvatar::getEntityNode()
+Ogre::SceneNode* PlayerAvatar::getEntityNode()
 {
 	return entity_node_;
 }
+
+AABBCollider* PlayerAvatar::get_collider() const
+{
+	return collider_;
+}
+
 
 void PlayerAvatar::update(Ogre::Real delta_time, const Uint8* state)
 {
@@ -80,7 +92,7 @@ void PlayerAvatar::update(
 	// Keep player facing away from the camera
 	rotation_ = (GetRotation(
 		Ogre::Vector3(
-			camera_direction.x, 
+			camera_direction.x,
 			0,
 			camera_direction.y
 		)) + Ogre::Radian(Ogre::Math::PI)).valueRadians();

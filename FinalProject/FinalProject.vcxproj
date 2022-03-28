@@ -151,6 +151,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AABBCollider.cpp" />
+    <ClCompile Include="DynamicGameObject.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main.cpp" />
@@ -169,6 +171,8 @@
     <ClCompile Include="SwirlEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AABBCollider.h" />
+    <ClInclude Include="DynamicGameObject.h" />
     <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="ICollider.h" />
     <ClInclude Include="IGameObject.h" />

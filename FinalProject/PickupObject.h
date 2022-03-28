@@ -15,8 +15,8 @@ public:
 	// position: Where the object will be placed in world coordinates
 	// scale: How much the size of the object is scaled in the x, y and z dimensions
 	PickupObject(
-		Ogre::SceneManager* scene_manager, 
-		const char* mesh_file_name, 
+		Ogre::SceneManager* scene_manager,
+		const char* mesh_file_name,
 		Ogre::Vector3 position = Ogre::Vector3(0, 0, 0),
 		Ogre::Vector3 scale = Ogre::Vector3(1, 1, 1)
 	);
